@@ -7,9 +7,14 @@ int ledLeft = 4;
 
 int blinkMode = false;
 int toggleMode = false;
+int flashMode = false;
 int ledState = LOW;
 long previousMillis = 0;
 long interval = 1000;
+
+long intervalOn = 0;
+long intervalOff = 0;
+int times = 0;
 
 void setup() {
   Serial.begin(9600);
@@ -43,6 +48,7 @@ void loop() {
       digitalWrite(ledLeft, LOW);
       blinkMode = false;
       toggleMode = false;
+      flashMode = false;
     }
     
     //toggle rigth
@@ -71,6 +77,12 @@ void loop() {
         interval = 200;
     }
     
+    //toogle
+    if(command == "t1000") {
+        toggleMode = true;
+        interval = 500;
+    }
+    
     if(command == "t500") {
         toggleMode = true;
         interval = 500;
@@ -81,8 +93,16 @@ void loop() {
         interval = 200;
     }
     
+    if(command == "flash") {
+        flashMode = true;
+        times = 0;
+        intervalOn = 200;
+        intervalOff = 1000;
+        interval = intervalOn;
+    }
+    
     command = ""; // No repeats
-  }
+  }//if
   
   if(blinkMode) {
       unsigned long currentMillis = millis();
@@ -100,7 +120,7 @@ void loop() {
 
         digitalWrite(ledRight, ledState);
         digitalWrite(ledLeft, ledState);
-      }
+    }
   }
   
     if(toggleMode) {
@@ -119,6 +139,35 @@ void loop() {
 
         digitalWrite(ledRight, ledState);
         digitalWrite(ledLeft, !ledState);
+      }
+    }
+      
+      
+     if(flashMode) {
+      unsigned long currentMillis = millis();
+     
+      if(currentMillis - previousMillis > interval) {
+
+        previousMillis = currentMillis;   
+    
+        if(times == 3) {
+          times = 0;
+          interval = intervalOff;
+          ledState = LOW;
+        }
+        else {
+          times = times +1;
+          interval = intervalOn;
+          if (ledState == LOW) {
+            ledState = HIGH;
+          }
+          else {
+            ledState = LOW;
+          }
+        }
+       
+        digitalWrite(ledRight, ledState);
+        digitalWrite(ledLeft, ledState);
       }
   }
   
