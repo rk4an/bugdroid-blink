@@ -1,3 +1,5 @@
+![bugdroid](https://raw.githubusercontent.com/rk4an/bugdroid-blink/master/img/bugdroid.jpg)
+
 ## Prerequisite ##
 
 * [Arduino Nano with ATMEGA328P][2]
@@ -17,4 +19,3 @@
   [2]: http://www.amazon.fr/gp/product/B00D84UN9S/
   [3]: http://www.amazon.fr/gp/product/B00H07UJL6/
 
-![bugdroid](https://raw.githubusercontent.com/rk4an/bugdroid-blink/master/img/bugdroid.jpg)
