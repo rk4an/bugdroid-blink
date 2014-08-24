@@ -13,5 +13,6 @@
 * Led left on pin D4
 * HC-06 TX on D6 and RX on D7
 
-
   [1]: https://play.google.com/store/apps/details?id=mobi.dzs.android.BLE_SPP_PRO&hl=fr_FR
+
+![bugdroid](https://raw.githubusercontent.com/rk4an/bugdroid-blink/master/img/bugdroid.jpg)
