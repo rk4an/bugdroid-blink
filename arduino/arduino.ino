@@ -1,4 +1,11 @@
+#include <OneWire.h>
+#include <DallasTemperature.h>
 #include <SoftwareSerial.h>
+
+#define ONE_WIRE_BUS 2
+OneWire oneWire(ONE_WIRE_BUS);
+DallasTemperature sensors(&oneWire);
+
 SoftwareSerial mySerial(7, 6); // RX, TX
 
 String command = "";
@@ -22,6 +29,7 @@ void setup() {
   pinMode(ledRight, OUTPUT); 
   pinMode(ledLeft, OUTPUT); 
   
+  sensors.begin();
   mySerial.begin(9600);
 }
 
@@ -101,6 +109,11 @@ void loop() {
         interval = intervalOn;
     }
     
+     if(command == "température") {
+        sensors.requestTemperatures();
+        mySerial.print(sensors.getTempCByIndex(0));
+    }
+    mySerial.print(" \n");
     command = ""; // No repeats
   }//if
   
