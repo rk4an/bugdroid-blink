@@ -7,7 +7,6 @@
 * 2 green LEDs
 * 2 resitors 220 Ohm
 * A bugdroid
-* [Bluetooth SPP Pro apps][1]
 
 ## Installation ##
 
@@ -19,3 +18,9 @@
   [2]: http://www.amazon.fr/gp/product/B00D84UN9S/
   [3]: http://www.amazon.fr/gp/product/B00H07UJL6/
 
+## Usage ##
+
+  * Android: [Bluetooth SPP Pro apps][1]
+  * Linux: 
+    * sudo hcitool scan
+    * sudo rfcomm bind /dev/rfcomm0 xx:xx:xx:xx:xx:xx 1
