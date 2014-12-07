@@ -109,8 +109,7 @@ void loop()
     if(cmdReady == 1) {
         command.trim();
         command.toLowerCase();
-        stopAll();
-        request = command;
+        
 
         if(command == "temp") {
             sensors.requestTemperatures();
@@ -123,22 +122,27 @@ void loop()
             mySerial.println("ok");
         }
         else {
+           request = command;
+           stopAll();
            color();
+           
+           if(command.substring(18) == "a") {
+              interval = 1000;
+              blinkMode = true;
+           }
+           else if(command.substring(18) == "b") {
+              flashMode = true;
+              times = 0;
+              intervalOn = 200;
+              intervalOff = 1000;
+              interval = intervalOn;
+           }
+           
            Serial.println("ok");
            mySerial.println("ok");
         }
 
-        if(command.substring(18) == "a") {
-            interval = 1000;
-            blinkMode = true;
-        }
-        else if(command.substring(18) == "b") {
-            flashMode = true;
-            times = 0;
-            intervalOn = 200;
-            intervalOff = 1000;
-            interval = intervalOn;
-        }
+
     
         command = ""; // No repeats
         cmdReady = 0;
@@ -191,4 +195,5 @@ void loop()
         }
     }
 }
+
 
