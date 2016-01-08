@@ -3,16 +3,24 @@ var app = express();
 var serialport = require('serialport');
 var serialPortName = "/dev/ttyUSB0"
 
-var resc;
+var stop = false;
+var client;
 
 app.get('/cmd', function (req, res) {
   console.log("GET " + req.query.cmd);
 
-  resc = res;
-  serialPort.write(req.query.cmd+"\n", function(err, results) {
-      console.log("results: " + results)
-  });
-
+  if(!stop) {
+     stop = true;
+     client = res;
+     serialPort.write(req.query.cmd+"\n", function(err, results) {
+         console.log("results: " + results)
+      });
+   }
+   else {
+     console.log("Server busy");
+     res.send("Server busy");
+     res.end();
+   }
 });
 
 
@@ -29,12 +37,11 @@ var serialPort = new serialport.SerialPort(serialPortName,{
 });
 
 serialPort.on('data', function(data) {
-   resc.send(data);
+   client.send(data);
    console.log('data received: ' + data);
+   stop = false;
 });
 
 serialPort.on("open", function () {
    console.log('Serial open');
 });
-
-
